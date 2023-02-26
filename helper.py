@@ -3,6 +3,7 @@ from wordcloud import WordCloud
 import pandas as pd
 from collections import Counter
 import nltk
+nltk.download('stopwords')
 import emoji
 stopwords = nltk.corpus.stopwords.words('english')
 extract=URLExtract()
