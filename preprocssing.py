@@ -6,7 +6,13 @@ def preprocessor(data)->pd.DataFrame:
     messages=re.split(pattern,data)[1:]
     dates=re.findall(pattern,data)
     df=pd.DataFrame({'user_msg':messages,'msg_date':dates})
-    df['msg_date']=pd.to_datetime(df['msg_date'],format='%d/%m/%Y, %I:%M %p - ')
+    x=dates[1][6:]
+    if(len(x[:-13])==2):
+        df['msg_date']=pd.to_datetime(df['msg_date'],format='%d/%m/%y, %I:%M %p - ')
+    else:
+        df['msg_date']=pd.to_datetime(df['msg_date'],format='%d/%m/%Y, %I:%M %p - ')
+#     df=pd.DataFrame({'user_msg':messages,'msg_date':dates})
+#     df['msg_date']=pd.to_datetime(df['msg_date'],format='%d/%m/%Y, %I:%M %p - ')
     users = []
     messages = []
     for message in df['user_msg']:
