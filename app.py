@@ -2,9 +2,9 @@ import streamlit as st
 import preprocssing
 import helper
 import matplotlib.pyplot as plt
-import pandas as pd
+import pandas as pd,seaborn as sns
 st.sidebar.title("WHATSAPP CHAT ANALYZER")
-st.header("MAKE INSIGHTS OUT OF YOUR DATA")
+st.title("MAKE INSIGHTS OUT OF YOUR DATA")
 
 uploaded_file = st.sidebar.file_uploader("Choose a file")
 if uploaded_file is not None:
@@ -48,11 +48,11 @@ if uploaded_file is not None:
 
 
         st.title("GENERAL STATISTICS")
-        c1,c2,c3,c4=st.columns(4)
+        c1,c2,c3=st.columns(3)
 
         
         with c1:
-            st.header("Total Messages")
+            st.header("TotalMessages")
             st.title(total_messages)
 
         with c2:
@@ -78,7 +78,7 @@ if uploaded_file is not None:
 
         fig,ax=plt.subplots()
 
-        ax.barh(common_words_df[0],common_words_df[1],color='black')
+        ax.barh(common_words_df[0],common_words_df[1],color='lightgreen')
         st.pyplot(fig)
         #st.dataframe(common_words_df)
 
@@ -106,7 +106,7 @@ if uploaded_file is not None:
         timeline_df=helper.timeline_plot(user_selected,df,startdate,enddate)
 
         fig,ax=plt.subplots()
-        ax.plot(timeline_df['monthandyear'],timeline_df['msgs'],color='yellow')
+        ax.plot(timeline_df['monthandyear'],timeline_df['msgs'],color='red')
         plt.xticks(rotation='vertical')
         st.pyplot(fig)
 
@@ -117,7 +117,7 @@ if uploaded_file is not None:
         day_wise_df=helper.day_wise_plot(user_selected,df,startdate,enddate)
 
         fig,ax=plt.subplots()
-        ax.bar(day_wise_df.index,day_wise_df.values,color='green')
+        ax.bar(day_wise_df.index,day_wise_df.values,color='yellow')
         plt.xticks(rotation='vertical')
         st.pyplot(fig)
 
@@ -130,6 +130,15 @@ if uploaded_file is not None:
         ax.bar(month_wise_df.index,month_wise_df.values,color='violet')
         plt.xticks(rotation='vertical')
         st.pyplot(fig)
+
+
+        st.title("Activity Heat Map")
+
+        user_heatmap = helper.heatmap(user_selected,df,startdate,enddate)
+        fig,ax = plt.subplots()
+        ax = sns.heatmap(user_heatmap)
+        st.pyplot(fig)
+
 
 
 
@@ -148,10 +157,10 @@ if uploaded_file is not None:
             c1,c2=st.columns(2)
 
             with c1:
-                st.header("Busy Users")
+                st.header("Most Frequent Users")
                 fig, ax=plt.subplots()
 
-                ax.bar(users,values,color='red')
+                ax.bar(users,values,color='orange')
                 plt.xticks(rotation='vertical')
                 st.pyplot(fig)
 
