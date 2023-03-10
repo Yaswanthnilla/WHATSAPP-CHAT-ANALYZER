@@ -28,12 +28,15 @@ def preprocessor(data)->pd.DataFrame:
         
     users = []
     messages = []
+    temp=0
     for message in df['user_msg']:
         entry = re.split('([\w\W]+?):\s', message)
         if entry[1:]:  # user name
             users.append(entry[1])
             messages.append(" ".join(entry[2:]))
         else:
+            if(temp==0):
+                temp=1
             users.append('group_notification')
             messages.append(entry[0])
     df['user']=users
@@ -65,7 +68,7 @@ def preprocessor(data)->pd.DataFrame:
 
 
 
-    return df
+    return df,temp
     
 
 
