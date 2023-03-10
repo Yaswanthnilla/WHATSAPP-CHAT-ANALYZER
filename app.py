@@ -10,14 +10,16 @@ uploaded_file = st.sidebar.file_uploader("Choose a file")
 if uploaded_file is not None:
     bytes_data = uploaded_file.getvalue()
     data = bytes_data.decode("utf-8")
-    df=preprocssing.preprocessor(data)
+    df,check_grp_notification=preprocssing.preprocessor(data)
 
     #st.dataframe(df)
 
 
     users_list=df['user'].unique().tolist()
 
-    users_list.remove('group_notification')
+#     users_list.remove('group_notification')
+    if(check_grp_notification):
+        users_list.remove('group_notification')
     users_list.sort()
     users_list.insert(0,'Overall Users')
 
